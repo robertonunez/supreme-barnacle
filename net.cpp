@@ -10,6 +10,7 @@
 #include <cmath>
 #include <fstream>
 #include <sstream>
+#include <time.h>
 
 using namespace std;
 
@@ -128,7 +129,7 @@ private:
     static double alpha; // [0.0..n] multiplier of last weight change (momentum)
     static double transferFunction(double x);
     static double transferFunctionDerivative(double x);
-    static double randomWeight(void) { return rand() / double(RAND_MAX); }
+    static double randomWeight(void) { srand(time(NULL)); return rand() / double(RAND_MAX); }
     double sumDOW(const Layer &nextLayer) const;
     double m_outputVal;
     vector<Connection> m_outputWeights;
@@ -198,7 +199,7 @@ double Neuron::transferFunction(double x)
 double Neuron::transferFunctionDerivative(double x)
 {
     // tanh derivative
-    return 1.0 - x * x;
+    return 1.0 - tanh(x) * tanh(x);
 }
 
 void Neuron::feedForward(const Layer &prevLayer)
@@ -358,7 +359,7 @@ void showVectorVals(string label, vector<double> &v)
 
 int main()
 {
-    TrainingData trainData("/tmp/trainingData.txt");
+    TrainingData trainData("./trainingData.txt");
 
     // e.g., { 3, 2, 1 }
     vector<unsigned> topology;

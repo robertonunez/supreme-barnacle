@@ -26,3 +26,9 @@
 *.exe
 *.out
 *.app
+
+# Debug files
+*.stackdump
+
+# Temp files (wtf, why are these not ignored by default, git?)
+*~
